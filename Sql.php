@@ -39,8 +39,38 @@ class Sql
             die('Charset Error(' . $this->link->errno . ')' . $this->link->error);
         }
     }
+
+    public function sql_exec($sql)
+    {
+        $res = $this->link->query($sql);
+        if (!$res) {
+            die('Charset Error(' . $this->link->errno . ')' . $this->link->error);
+        }
+        return $res;
+    }
+
+    public function sql_query($sql,$all = false)
+    {
+        $res = $this->link->query($sql);
+        if (!$res) {
+            die('Charset Error(' . $this->link->errno . ')' . $this->link->error);
+        }
+        
+        if($all){
+            return $res->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return $res->fetch_assoc();
+        }
+    }
 }
 
 $s = new Sql(array('pass'=>'','charset'=>'utf8'));
 // $s->sql_connect();
 // var_dump($s);
+
+//查询测试
+$sql = 'select * from student';
+$res = $s->sql_query($sql,true);
+
+echo '<pre>';
+var_dump($res);
