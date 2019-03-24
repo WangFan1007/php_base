@@ -7,7 +7,10 @@ $pdo->exec('set names utf8');
 
 $pre_sql = 'SELECT * FROM student WHERE id = :id';
 $stmt = $pdo->prepare($pre_sql);
-$stmt->bindValue(':id',1);
+// $stmt->bindValue(':id',1);
+$id = 2;
+$stmt->bindParam(':id',$id);
+$id = 5;
 $stmt->execute();
 
 $res = $stmt->fetch(PDO::FETCH_ASSOC);
